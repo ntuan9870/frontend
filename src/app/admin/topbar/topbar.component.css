@@ -1,17 +1,114 @@
-.navbar{
+nav{
     width: 100%;
     background-color: orange;
     height:50px;
     position: fixed;
     z-index: 1000;
+}
+#title{
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: white;
+  line-height: 50px;
+  margin-left: 10px;
+}
+#nav_admin{
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+}
+.dropdown_info{
+  position: absolute;
+  background-color: white;
+  box-sizing: border-box;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 0.25rem;
+  top: 41px;
+  right: 0;
+  padding: 3px 0px;
+}
+.dropdown_info a{
+  display: block;
+  padding: 5px 15px;
+  width: 150px;
+  color: black;
+  text-decoration: none;
+}
+.dropdown_info a:hover{
+  background-color: rgb(218, 218, 218);
+}
+.dropdown_info a i{
+  width: 25px;
+}
+.show{
+  display: block!important;
+}
+#menu_topbar{
+  position: absolute;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: black;
+  z-index: 900;
+  top:50px;
+}
+#profile_admin{
+  position: relative;
+}
+#profile_admin button{
+  position: absolute;
+  right: 0;
+}
+#profile_admin>a{
+  position: absolute;
+  right: 0;
+  line-height: 30px;
+  font-size: 29px;
+  background-color: rgba(27, 27, 27, 0.514);
+  color: white;
+  border: 1px solid rgba(0, 0, 0, 0.377);
+  padding: 3px;
+  border-radius: 3px;
+  width: 40px;
+  text-align: center;
+  display: none;
+}
+#profile_admin>a:hover{
+  cursor: pointer;
+  background-color: rgba(161, 161, 161, 0.514);
+}
+#menu_topbar_list{
+  color: white;
+  color: 12px;
+  list-style: none;
+  margin: 0px;
+  padding: 0px 10px;
+  font-size: 14px;
+}
+#menu_topbar_list li{
+  line-height: 45px;
+  cursor: pointer;
+}
+#menu_topbar_list li:hover{
+  color: blueviolet;
+}
+@media (max-width: 768px) {
+  #profile_admin>a{
+    display: block;
   }
-  .dropdown-menu a{
-    color: black;
+  #profile_admin button{
+    display: none;
   }
-  .dropdown-menu a svg{
-    width: 15px;
-    height:15px;
+}
+@media (min-width: 768px) {
+  #profile_admin>a{
+    display: none;
   }
-.icon_info{
-  width: 20px;
-}  
+  #profile_admin button{
+    display: block;
+  }
+  #menu_topbar{
+    display: none;
+  }
+}
