@@ -1,78 +1,84 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { Category } from 'src/app/models/category.model';
+import { CommonService } from 'src/app/services/common.service';
 import { CategoryService } from 'src/app/services/category.service';
-declare function showSwal(type,message):any;
+import { NgForm } from '@angular/forms'
+declare var $:any;
 @Component({
   selector: 'app-addcategory',
   templateUrl: './addcategory.component.html',
   styleUrls: ['./addcategory.component.css']
 })
 export class AddcategoryComponent implements OnInit {
-
-  constructor(private categoryService:CategoryService) { }
+  public baseUrl = ""
+  constructor(private categoryService:CategoryService, public c:CommonService, private el: ElementRef) {
+    this.baseUrl = c.baseUrl
+  }
   public category_name ="";
+  public category_img = '';
   public resultadd = "";
-  public resultcheckname="";
-  public ch = true;
-  public allCategory:Category[] = [];
+  public current_categories:Category[] = [];
+  public SelectedImage:File = null;
+  public first_click_image = false;
+  public ct_name = null;
+  public config = null;
   @ViewChild('category_namecheck') category_namecheck: ElementRef;
+  @ViewChild("addCategory") addCategory: NgForm;
+
   ngOnInit(): void {
-    // this.show();
+    this.c.input_style.input_name = this.el.nativeElement.querySelector("input[name='category_name']");
+    this.show();
+    this.ct_name = this.el.nativeElement.querySelector("#category_name");
+    this.config = {
+      itemsPerPage: 5,
+      currentPage: 1,
+      totalItems: this.current_categories.length
+    }
   }
 
   add(){
-    const fd = new FormData();
+    let fd = new FormData();
     fd.append('category_name',this.category_name);
+    fd.append('category_img', this.SelectedImage)
     this.categoryService.add(fd).subscribe(
       res=>{
         this.resultadd='success';
-        this.ch = true;
         this.category_name='';
         this.show();
-        // this.category_namecheck.nativeElement.blur();
-        showSwal('auto-close','Thêm thành công!');
+        this.category_name = '';
+        this.category_img = null;
+        $("#avatar").fadeIn("fast").attr('src','./assets/admin/img/new_seo-10-512.png');
+        this.addCategory.reset();
+        this.c.showSwal('Thêm thành công!');
       },
       error=>{
-        this.resultadd='error';
+        this.c.check_error_submit(error);
       }
     );
   }
 
   show(){
-    // this.categoryService.show();
-    // this.categoryService.allCategory.subscribe(
-    //   res=>{
-    //     this.allCategory = res;
-    //   },
-    //   error=>{
-    //     alert('Lỗi');
-    //   }
-    // );
+    this.categoryService.getAllCurrentCategories((result:any)=>{
+      this.current_categories = result;
+    });
   }
 
-  checkname(categoryname:any){
-    // this.ch = false;
-    // this.categoryService.checkname(categoryname).subscribe(
-    //   res=>{
-    //     this.resultcheckname = res['success'];
-    //   },
-    //   error=>{
-    //     this.resultcheckname = 'error';
-    //   }
-    // );
+  removeCategory(ca:Category){
+    this.c.confirmMessage("Bạn sẽ không thể khôi phục dữ liệu!",()=>{
+      this.categoryService.removeCategory(ca.category_id).subscribe(
+        res=>{
+          this.show();
+          this.c.showSwal('Xóa thành công!');
+        },error=>{
+          alert('Có lỗi trong quá trình truy xuất dữ liêu!');
+        }
+      );
+    })
   }
-
-  removeCategory(c:Category){
-    // if(confirm('Bạn có chắc chắn muốn xóa?')){
-    //   this.categoryService.removeCategory(c.category_id).subscribe(
-    //     res=>{
-    //       this.show();
-    //       // showSwal('auto-close','Xóa thành công!');
-    //     },error=>{
-    //       // showSwal('auto-close','Có lỗi trong quá trình truy xuất dữ liêu!');
-    //     }
-    //   );
-    // }
+  onSelect(event){
+    this.SelectedImage=this.c.onSelect(event, $("#avatar"), this.SelectedImage)
   }
-
+  pageChanged(event:any){
+    this.config.currentPage = event;
+  }
 }

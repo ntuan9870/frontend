@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col">
+      <h3>Thêm chương trình khuyến mãi</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <form #addForm="ngForm">
+            <div class="form-group">
+                <label>Tên chương trình <i style="color: red;">(*)</i></label>
+                <input type="text" class="form-control" placeholder="Tên chương trình....." name="promotion_name" [(ngModel)]="form.promotion_name" required #name_check="ngModel" autocomplete="off">
+                <div *ngIf="name_check.invalid && (name_check.dirty || name_check.touched)" class="message_error">
+                    <div *ngIf="name_check.errors['required']">
+                        Tên chương trình là trường bắt buộc!
+                      </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Thời gian <i style="color: red;">(*)</i></label>
+                <input type="date"  class="form-control" name="promotion_start_date"  [(ngModel)]="form.promotion_start_date"  (change)="change_start_date()">
+                <div id="startdate_error"></div> 
+                Đến 
+                <input type="date"  class="form-control" name="promotion_end_date" [(ngModel)]="form.promotion_end_date" required (change)="change_end_date()" >
+                <div id="enddate_error"></div> 
+            </div>
+            <div class="form-group">
+                <label>Giá trị <i style="color: red;">(*)</i></label>
+                <input type="number" min="1" max="100" placeholder="Nhập phần trăm khuyến mãi" class="form-control" name="promotion_infor"[(ngModel)]="form.promotion_infor" required #infor_check="ngModel">
+                <div *ngIf="infor_check.invalid && (infor_check.dirty || infor_check.touched)" class="message_error">
+                    <div *ngIf="infor_check.errors['required']">
+                        Giá trị là trường bắt buộc!
+                    </div>
+                    <div *ngIf="infor_check.errors['min']">
+                        Giá trị phải lớn hơn 0!
+                    </div>
+                    <div *ngIf="infor_check.errors['max']">
+                        Giá trị phải nhỏ hơn hoặc bằng 100!
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Trạng thái <i style="color: red;">(*)</i></label>
+                <div class="row" style="margin: 0px;">
+                    <div class="col-4">
+                        <input type="radio" name="promotion_apply" value="true" [(ngModel)]="form.promotion_apply" required>
+                         Kích hoạt
+                    </div>
+                    <div class="col-4">
+                        <input type="radio" name="promotion_apply" value="false" [(ngModel)]="form.promotion_apply" required>
+                         Chưa áp dụng
+                    </div>
+                </div>
+            </div>
+            <input [disabled]="!addForm.valid" type="submit" name="submit" value="Thêm KM" class="btn btn-primary" (click)="add()" />
+        </form>
+    </div>
+</div>

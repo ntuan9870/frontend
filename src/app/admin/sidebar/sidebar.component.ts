@@ -8,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
 export class SidebarComponent implements OnInit {
 
   public user_level = 0;
+  public s_m = false
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+  show_menu(){
+    this.s_m = !this.s_m
   }
 
 }

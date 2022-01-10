@@ -1,0 +1,24 @@
+#search_form{
+    display: flex;
+}
+.read_more{
+    position: absolute;
+    font-size: 15px;
+    bottom:-17px;
+    padding-top: 15px;
+    width: 100%;
+    color: blue;
+}
+.read_more:hover{
+    color: rgb(65, 65, 255);
+    text-decoration: underline;
+    cursor: pointer;
+}
+.collapse_p + p {
+    overflow: hidden;
+    height: 75px;
+    margin-bottom: 0px;
+}
+.r_blur{
+    background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgb(241, 241, 241));
+}

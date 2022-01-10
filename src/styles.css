@@ -1,1 +1,61 @@
-/* You can add global styles to this file, and also import other style files */
+.message_error{
+    color: red;
+    font-size: 13px;
+    padding: 5px 2px;
+}
+.form-control.ng-touched.ng-invalid, .form-control.ng-dirty.ng-invalid{
+    border-color: #dc3545;
+}
+.form-control.ng-touched.ng-invalid:focus, .form-control.ng-dirty.ng-invalid:focus{
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgb(220 53 69 / 25%);
+}
+/* .form-control.ng-touched.ng-valid{
+    border-color: #dc3545;
+}
+.form-control.ng-touched.ng-valid:focus{
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgb(220 53 69 / 25%);
+} */
+.table_nothing{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid black;
+    color: red;
+    text-align: center;
+}
+.tabs ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    border-radius: 8px 8px 0px 0px;
+    overflow: hidden;
+    background-color: #bbdcff;
+    border: solid white;
+    border-width: 0px 1px;
+}
+.tabs .tab_item{
+    text-align: center;
+    flex: 1;
+    padding: 10px;
+    font-weight: bold;
+    border: solid white;
+    border-width: 0px 2px;
+}
+.tabs .tab_item:first-child{
+    border-width:0;
+}
+.tabs .tab_item:last-child{
+    border-width:0;
+}
+.tabs .tab_item:hover{
+    cursor: pointer;
+}
+.tabs .tab_item.active{
+    background-color: #007bff;
+    color: white;
+}
+.action_options div{
+    display: flex;
+    justify-content: space-around;
+}

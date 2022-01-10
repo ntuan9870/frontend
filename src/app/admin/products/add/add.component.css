@@ -1,0 +1,10 @@
+.form_group_small{
+    margin-bottom: 0rem;
+}
+.small_lable{
+    font-size: 15px;
+    margin-bottom: 0.1rem;
+}
+#avatar:hover{
+    cursor: pointer;
+}

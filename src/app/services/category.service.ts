@@ -2,45 +2,65 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Category } from '../models/category.model';
+import { CommonService } from './common.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
 
-  private baseUrl = "https://mysterious-brook-62539.herokuapp.com/api/category/";
-  allCategory = new BehaviorSubject<Category[]>([]);
-  public category_name="";
+  public baseUrl = ""
+  public input_style = {
+    "input_name" : null
+  }
 
-  constructor(private http:HttpClient) {
-    this.show();
-   }
+  constructor(private http:HttpClient, private c:CommonService) {
+    this.baseUrl = c.baseUrl+"api/category/";
+  }
 
   public add(form:any) {
     return this.http.post(this.baseUrl+'add',form);
   }
 
-  public show(){
-  //   return this.http.post(this.baseUrl+'show',null).subscribe(res=>{
-  //     var r:any = res;
-  //     this.allCategory.next(r.categories);
-  //   });
+  public getAllCurrentCategories(callback){
+    this.http.get(this.baseUrl+'getAllCurrentCategories').subscribe(
+      res=>{
+        callback(res['categories'])
+      },error=>{
+        this.c.showAlert("Lỗi hệ thống!")
+      }
+    );
+  }
+  public get_category_by_id(category_id:any, callback){
+    return this.http.get(this.baseUrl+"get_category_by_id?category_id="+category_id).subscribe(
+      res=>{
+        callback(res['message']);
+      },error=>{
+        this.c.check_error_submit(error);
+      }
+    );;
   }
 
-  // public getEdit(id:any){
-  //   return this.http.post(this.baseUrl+"getEdit?id="+id,null);
-  // }
+  public update(fd:any){
+    return this.http.post(this.baseUrl+"update",fd);
+  }
 
-  // public update(fd:any){
-  //   return this.http.post(this.baseUrl+"postEdit",fd);
-  // }
+  public checkname(categoryname:any){
+    return this.http.get(this.baseUrl+"checkname?category_name="+categoryname);
+  }
 
-  // public checkname(categoryname:any){
-  //   return this.http.post(this.baseUrl+"checkname?category_name="+categoryname,null);
-  // }
-
-  // public removeCategory(category_id:any){
-  //   return this.http.post(this.baseUrl+'remove?category_id='+category_id,null);
-  // }
-
+  public removeCategory(category_id:any){
+    return this.http.delete(this.baseUrl+'remove',{params:{category_id:category_id}});
+  }
+  public check_name(event:any){
+    this.checkname(event.target.value).subscribe(
+      res=>{
+        return res['message'];
+      },
+      error=>{
+        return 'error';
+      }
+    );
+    return '';
+  }
 }

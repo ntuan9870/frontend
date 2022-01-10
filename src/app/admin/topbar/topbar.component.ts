@@ -11,7 +11,6 @@ export class TopbarComponent implements OnInit {
   public user_name = "";
   public user_id = '';
   public show_dropdown = false
-  public s_m = false
 
   constructor() { }
 
@@ -38,9 +37,6 @@ export class TopbarComponent implements OnInit {
   }
   open_drop_info(){
     this.show_dropdown=!this.show_dropdown
-  }
-  show_menu(){
-    this.s_m = !this.s_m
   }
 
 }

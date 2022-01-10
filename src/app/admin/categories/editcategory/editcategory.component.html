@@ -1,1 +1,40 @@
-<p>editcategory works!</p>
+<div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">Danh mục sản phẩm</h1>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-xs-12 col-md-5 col-lg-5">
+        <div class="panel panel-primary">
+          <h3>Sửa danh mục</h3>
+          <i style="color: red;">(*) là trường bắt buộc! </i>
+          <form #editCategory="ngForm">
+            <div class="form-group">
+              <label>Tên danh mục <i style="color: red;">(*)</i></label>
+                <input id="category_name" type="text" name="category_name" class="form-control" placeholder="Tên danh mục..." autocomplete="off" required [(ngModel)]="category.category_name" #category_namecheck = "ngModel" (ngModelChange)="c.removeNameInputMessage()">
+                <div *ngIf="category_namecheck.invalid && (category_namecheck.dirty || category_namecheck.touched)" class="message_error">
+                  <div *ngIf="category_namecheck.errors['required']||c.validate_error['name_required']">
+                    Tên danh mục là trường bắt buộc!
+                  </div>
+                </div>
+                <div *ngIf ="c.validate_error['name_unique']" class="invalid-feedback">
+                    Tên danh mục đã bị trùng!
+                </div>
+            </div>
+            <div class="form-group" >
+              <label>Ảnh sản phẩm <i style="color: red;">(*)</i></label>
+              <input required id="img" type="file" name="img" class="form-control d-none" (change) = "onSelect($event)" #select_img><br>
+              <img id="avatar" style="background-color: rgb(255, 255, 255);" class="thumbnail" width="300px" src="./assets/admin/img/new_seo-10-512.png" (click)="select_img.click()">
+            </div>
+            <div class="invalid-feedback" style="display: block;">
+              <div *ngIf="c.validate_error['image_mimes']">Hình ảnh sai định dạng (jpeg,jpg,png,gif)!</div>
+              <div *ngIf="c.validate_error['image_required']">Hình ảnh là trường bắt buộc!</div>
+            </div>
+            <div class="form-group">
+                <input type="submit" [disabled]="(!editCategory.valid)||c.hasError()" name="name" class="form-control btn btn-primary" value="Thực hiện" (click)="edit()">
+            </div>
+          </form>
+        </div>
+    </div>
+  </div>

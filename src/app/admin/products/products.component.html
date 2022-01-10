@@ -1,1 +1,92 @@
-<p>products works!</p>
+<h3><i style="position: relative; top:-3px;" class="fas fa-mobile-alt"></i> Sản phẩm</h3>
+<div class="row">
+    <div class="col-5 "><a [routerLink]="['add']" class="btn btn-primary">Thêm sản phẩm</a></div>
+    <form id="search_form" class="col-7">
+        <input class="form-control" type="text" placeholder="Search.." (keyup)="search($event)">
+        <button class="ml-2 btn btn-success"><i class="fa fa-search"></i></button>
+    </form>
+</div>
+<div class="row" style="overflow-x: scroll; margin-top:20px;">
+    <div class="col">
+        <table class="table table-bordered">
+            <!-- <h6 *ngIf="products.length==0" >Không có sản phẩm cần tìm</h6> -->
+            <thead>
+                <tr class="bg-primary" style="font-size: 12px;">
+                    <th>ID</th>
+                    <th>Tên</th>
+                    <th>Giá</th>
+                    <th>Ảnh</th>
+                    <th width="7%">Phụ kiện</th>
+                    <th>Bảo hành</th>
+                    <th>KM</th>
+                    <th width="8%">Tình trạng</th>
+                    <th width="15%">Miêu tả</th>
+                    <th>Nổi bật</th>
+                    <th>Lịch sử giá</th>
+                    <th width="5%">Khác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="products.length == 0" class="table_nothing">
+                    <td colspan="12" class="message_error">Không có sản phẩm!</td>
+                </tr>
+                <tr *ngFor = "let p of products | paginate: config; let i = index">
+                    <td>{{p.product_id}}</td>
+                    <td>{{p.product_name}}</td>
+                    <td>{{p.product_price | currency:'VND':'symbol':'1.0-0':'vi-VN'}}</td>
+                    <td>
+                        <img width="75px" src={{baseUrl}}{{p.product_image}} class="thumbnail">
+                    </td>
+                    <td><p *ngIf="!p.product_accessories">Không có</p>{{p.product_accessories}}</td>
+                    <td><p *ngIf="!p.product_warranty">Không có</p>{{p.product_warranty}}</td>
+                    <td *ngIf='p.promotion_infor == 0'>Không</td>
+                    <td *ngIf='p.promotion_infor != 0'>{{p.promotion_infor}}%</td>
+                    <td>{{p.product_condition}}</td>
+                    <td><div style="position: relative;"><div class="read_more collapse_p r_blur" (click)="readMore($event)">Xem thêm>></div><p>{{p.product_description}}</p></div></td>
+                    <td><p *ngIf="p.product_featured=='true'">Có</p><p *ngIf="p.product_featured=='false'">Không</p></td>
+                    <td><a [routerLink]="['#']" (click)="getHistoryPrice(p.product_id)" data-toggle="modal" data-target="#hpModal">LS Giá</a></td>
+                    <td>
+                        <a [routerLink]="['edit/'+p.product_id]" class="btn btn-warning mb-2"><i class="fa fa-pencil"></i></a>
+                        <a [routerLink]="['#']" class="btn btn-danger" (click)='deleteProduct(p)'><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls *ngIf="products.length != 0" [nextLabel]="'Sau'" [previousLabel]="'Trước'" (pageChange)="pageChanged($event)"></pagination-controls>
+    </div>
+</div>
+<!-- <div class="modal fade" id="hpModal" tabindex="-1" role="dialog" aria-labelledby="hpModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="hpModalLabel">Lịch sử giá</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered" style="margin-top:20px;">
+        <h6 *ngIf="products.length==0" >Không có sản phẩm cần tìm</h6>
+        <thead>
+            <tr class="bg-primary">
+            <th>Mã</th>
+            <th>Giá sản phẩm</th>
+            <th>Ngày hiệu lực</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor = "let h of hps; let i = index">
+            <td>{{h.hp_id}}</td>
+            <td>{{h.product_price | currency:'VND':'symbol':'1.0-0':'vi-VN'}}</td>
+            <td>{{h.updated_at}}</td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+    </div>
+</div> -->
+
+  

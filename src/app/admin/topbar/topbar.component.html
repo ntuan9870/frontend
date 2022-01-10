@@ -1,26 +1,12 @@
-<nav>
-  <div class="row" id="nav_admin">
-    <a id="title" [routerLink]="['/admin']">SHOP ADMIN</a>
-    <div id="profile_admin" class="mr-3 mt-1 mb-1">
-      <button (click)="open_drop_info()" type="button" class="btn btn-secondary dropdown-toggle">
-        Admin{{user_name}}
-        <div class="dropdown_info" *ngIf="show_dropdown">
-          <a [routerLink]="['users/edit/'+user_id]"><i class="icon_info fas fa-edit"></i>Thông tin</a>
-          <a (click)="logout()" href="#"><i class="icon_info fas fa-sign-out-alt"></i>Đăng xuất</a>
-        </div>
-      </button>
-      <a (click)="show_menu()"><i *ngIf="!s_m" class="fas fa-bars"></i><i *ngIf="s_m" class="fas fa-times"></i></a>
-    </div>
+<nav class="row" id="nav_admin">
+  <a id="title" [routerLink]="['/admin']">SHOP ADMIN</a>
+  <div id="profile_admin" class="mr-3 mt-1 mb-1">
+    <button (click)="open_drop_info()" type="button" class="btn btn-secondary dropdown-toggle">
+      Admin{{user_name}}
+      <div class="dropdown_info" *ngIf="show_dropdown" style="z-index:1;">
+        <a [routerLink]="['users/edit/'+user_id]"><i class="icon_info fas fa-edit"></i>Thông tin</a>
+        <a (click)="logout()" href="#"><i class="icon_info fas fa-sign-out-alt"></i>Đăng xuất</a>
+      </div>
+    </button>
   </div>
 </nav>
-<div id="menu_topbar" *ngIf="s_m">
-  <ul id="menu_topbar_list">
-    <li><a>HOME</a></li>
-    <li><a>LOẠI SẢN PHẨM</a></li>
-    <li><a>TÀI KHOẢN</a></li>
-    <li><a>ĐƠN HÀNG</a></li>
-    <li><a>THỐNG KÊ</a></li>
-    <li><a>KHUYẾN MÃI</a></li>
-    <li><a>VOUCHER</a></li>
-  </ul>
-</div>

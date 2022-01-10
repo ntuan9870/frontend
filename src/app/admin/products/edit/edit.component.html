@@ -1,0 +1,88 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h4 class="page-header"><i class="fas fa-mobile-alt"></i> Sửa thông tin sản phẩm</h4>
+    </div>
+</div>
+<div class="row">
+    <form #editForm="ngForm" class="col-12">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-6">
+                <label class="small_lable" style="color: red;">(*) là trường bắt buộc! </label>
+                <div class="form-group form_group_small">
+                    <label class="small_lable">Tên sản phẩm <i style="color: red;">(*)</i></label>
+                    <input required type="text" name="name" class="form-control form-control-sm" [(ngModel)]="product.product_name" #name="ngModel" autocomplete="off" (ngModelChange)="c.removeNameInputMessage()">
+                    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="message_error">
+                        <div *ngIf="name.errors['required']||c.validate_error['name_required']">
+                            Tên là trường bắt buộc!
+                        </div>
+                    </div>
+                    <div *ngIf ="c.validate_error['name_unique']" class="invalid-feedback">
+                        Tên danh mục đã bị trùng!
+                    </div>
+                </div>
+                <div class="form-group form_group_small" >
+                    <label class="small_lable">Giá sản phẩm <i style="color: red;">(*)</i></label>
+                    <input required type="number" name="price" class="form-control form-control-sm" [(ngModel)]="product.product_price" #price="ngModel" autocomplete="off" min = "0">
+                    <div *ngIf="price.invalid && (price.dirty || price.touched)" class="message_error">
+                        <div *ngIf="price.errors['required']">
+                            Giá sản phẩm là trường bắt buộc!
+                        </div>
+                        <div *ngIf="price.errors['min']">
+                            Giá phải lớn hơn hoặc bằng 0!
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group form_group_small" >
+                    <label class="small_lable">Phụ kiện</label>
+                    <input type="text" name="accessories" class="form-control form-control-sm" [(ngModel)]="product.product_accessories" autocomplete="off">
+                </div>
+                <div class="form-group form_group_small" >
+                    <label class="small_lable">Bảo hành</label>
+                    <input type="text" name="warranty" class="form-control form-control-sm" [(ngModel)]="product.product_warranty" autocomplete="off">
+                </div>
+                <div class="form-group form_group_small" >
+                    <label class="small_lable">Khuyến mãi</label>
+                    <select [(ngModel)]="product.promotion_id" name="promotion_id" class="form-control form-control-sm">
+                        <option class="form-control" *ngFor="let p of promotions" [value]="p.promotion_id">{{p.promotion_name}}</option>
+                    </select>
+                </div>
+                <div class="form-group form_group_small" >
+                    <label class="small_lable">Tình trạng <i style="color: red;">(*)</i></label>
+                    <input required type="text" name="condition" class="form-control form-control-sm" [(ngModel)]="product.product_condition" #condition="ngModel" autocomplete="off">
+                    <div *ngIf="condition.invalid && (condition.dirty || condition.touched)" class="message_error">
+                    <div *ngIf="condition.errors['required']">
+                        Tình trạng là trường bắt buộc!
+                    </div>
+                    </div>
+                </div>
+                <div class="form-group form_group_small" >
+                    <label class="small_lable">Sản phẩm nổi bật <i style="color: red;">(*)</i></label><br>
+                    <label class="small_lable">Có</label>  <input type="radio" name="featured" value="true" [(ngModel)]="product.product_featured">
+                    <label class="small_lable">Không</label> <input type="radio" name="featured" value="false" [(ngModel)]="product.product_featured" checked>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-12 col-lg-6">
+                <label for=""></label>
+                <div class="form-group form_group_small" >
+                    <label class="small_lable">Ảnh sản phẩm <i style="color: red;">(*)</i></label>
+                    <input id="img" type="file" #file2 name="img" class="form-control form-control-sm d-none" (change) = "onSelect($event)"><br>
+                    <img id="avatar" style="background-color: rgb(255, 255, 255);" class="thumbnail" width="200px" (click)="file2.click()">
+                    <div *ngIf="c.validate_error['image_mimes']" class="message_error">
+                        Hình ảnh sai định dạng (jpeg, jpg, png, gif)!
+                    </div>
+                </div>
+                <div class="form-group " >
+                    <label>Miêu tả <i style="color: red;">(*)</i></label>
+                    <ckeditor [editor]="Editor" id="description" required name="description" [(ngModel)]="product.product_description" #description="ngModel"></ckeditor>
+                    <div *ngIf="description.invalid && (description.dirty || description.touched)" class="message_error">
+                    <div *ngIf="description.errors['required']">
+                        Miêu tả là trường bắt buộc!
+                    </div>
+                    </div>
+                </div>
+                <input type="submit" style="font-size: 13px;" (click)="edit()" [disabled]="!editForm.valid||c.hasError()" name="submit" value="Thêm" class="btn btn-success mr-2">
+                <a (click)="back()" style="color: white; font-size: 13px;" class="btn btn-danger">Hủy bỏ</a>
+            </div>
+        </div>
+    </form>
+</div>

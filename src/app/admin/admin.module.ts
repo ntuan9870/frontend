@@ -9,7 +9,13 @@ import { ProductsComponent } from './products/products.component';
 import { AddcategoryComponent } from './categories/addcategory/addcategory.component';
 import { EditcategoryComponent } from './categories/editcategory/editcategory.component';
 import { FormsModule } from '@angular/forms';
-
+import { AddComponent } from './products/add/add.component';
+import { EditComponent } from './products/edit/edit.component';
+import { PromotionsComponent } from './promotions/promotions.component';
+import { EditPromotionComponent } from './promotions/edit-promotion/edit-promotion.component';
+import { AddPromotionComponent } from './promotions/add-promotion/add-promotion.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -18,12 +24,19 @@ import { FormsModule } from '@angular/forms';
     SidebarComponent,
     ProductsComponent,
     AddcategoryComponent,
-    EditcategoryComponent
+    EditcategoryComponent,
+    AddComponent,
+    EditComponent,
+    PromotionsComponent,
+    EditPromotionComponent,
+    AddPromotionComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    FormsModule
+    FormsModule,
+    NgxPaginationModule,
+    CKEditorModule
   ]
 })
 export class AdminModule { }

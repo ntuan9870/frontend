@@ -1,62 +1,79 @@
 <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">Danh mục sản phẩm</h1>
-    </div>
+  <div class="col-lg-12">
+    <h1 class="page-header">Danh mục sản phẩm</h1>
+  </div>
+</div>
+  
+<div class="row">
+  <div class="col-xs-12 col-md-5 col-lg-5">
+      <div class="panel panel-primary">
+        <h3>Thêm danh mục</h3>
+        <i style="color: red;">(*) là trường bắt buộc! </i>
+        <form #addCategory="ngForm">
+          <div class="form-group">
+            <label>Tên danh mục <i style="color: red;">(*)</i></label>
+              <input id="category_name" type="text" name="category_name" class="form-control" placeholder="Tên danh mục..." autocomplete="off" required [(ngModel)]="category_name" #category_namecheck = "ngModel" (ngModelChange)="c.removeNameInputMessage()">
+              <div *ngIf="category_namecheck.invalid && (category_namecheck.dirty || category_namecheck.touched)" class="message_error">
+                <div *ngIf="category_namecheck.errors['required']||c.validate_error['name_required']">
+                  Tên danh mục là trường bắt buộc!
+                </div>
+              </div>
+              <div *ngIf ="c.validate_error['name_unique']" class="invalid-feedback">
+                  Tên danh mục đã bị trùng!
+              </div>
+          </div>
+          <div class="form-group" >
+            <label>Ảnh sản phẩm <i style="color: red;">(*)</i></label>
+            <input required id="img" type="file" name="img" class="form-control d-none" (change) = "onSelect($event)" #select_img><br>
+            <img id="avatar" style="background-color: rgb(255, 255, 255); width:60%;" class="thumbnail" width="300px" src="./assets/admin/img/new_seo-10-512.png" (click)="select_img.click()">
+            <div class="invalid-feedback" style="display: block;">
+              <div *ngIf="c.validate_error['image_mimes']">Hình ảnh sai định dạng (jpeg,jpg,png,gif)!</div>
+              <div *ngIf="c.validate_error['image_required']">Hình ảnh là trường bắt buộc!</div>
+            </div>  
+          </div>
+          <div class="form-group">
+              <input type="submit" [disabled]="(!addCategory.valid)||c.hasError()" name="name" class="form-control btn btn-primary" value="Thực hiện" (click)="add()">
+          </div>
+        </form>
+      </div>
   </div>
   
-  <div class="row">
-    <div class="col-xs-12 col-md-5 col-lg-5">
-        <div class="panel panel-primary">
-          <h3>Thêm danh mục</h3>
-          <i style="color: red;">(*) là trường bắt buộc! </i>
-          <form #addCategory="ngForm">
-            <div class="card-header bg-success"*ngIf="resultadd=='success'">Thêm danh mục thành công!</div>
-            <div class="card-header bg-danger"*ngIf="resultadd!='success'&&resultadd!=''">Thêm danh mục thất bại!</div>
-            <div class="form-group">
-              <label>Tên danh mục <i style="color: red;">(*)</i></label>
-                <input type="text" #txtCategoryname (keyup) = "checkname(txtCategoryname.value)" name="category_name" class="form-control" placeholder="Tên danh mục..." autocomplete="off" required [(ngModel)]="category_name" #category_namecheck = "ngModel">
-                <div *ngIf="ch==false&&category_namecheck.invalid && (category_namecheck.dirty || category_namecheck.touched)" class="alert alert-danger">
-                  <div *ngIf="category_namecheck.errors['required']">
-                    Tên danh mục là trường bắt buộc!
-                  </div>
-                </div>
-                <div *ngIf ="resultcheckname=='error' && ch==false" class="alert alert-danger">
-                    Tên danh mục đã bị trùng!
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" [disabled]="(!addCategory.valid)||resultcheckname=='error'" name="name" class="form-control btn btn-primary" placeholder="Tên danh mục..." value="Thực hiện" (click)="add()">
-            </div>
-          </form>
-        </div>
-    </div>
-    <div class="col-xs-12 col-md-7 col-lg-7">
-      <div class="panel panel-primary">
-        <h3>Danh sách danh mục</h3>
-        <div class="panel-body">
-          <div class="bootstrap-table">
-            <table class="table table-bordered">
-                      <thead>
-                        <tr class="bg-primary">
-                          <th>Tên danh mục</th>
-                          <th style="width:40%">Tùy chọn</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-              <tr *ngFor = 'let c of allCategory'>
+  <div class="col-xs-12 col-md-7 col-lg-7">
+    <div class="panel panel-primary">
+      <h3>Danh sách danh mục</h3>
+      <div class="panel-body">
+        <div class="bootstrap-table">
+          <table class="table table-bordered">
+            <thead>
+              <tr class="bg-primary">
+                <th style="width:10%">ID</th>
+                <th style="width:50%">Tên danh mục</th>
+                <th style="width:10%">Logo</th>
+                <th style="width:30%">Tùy chọn</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor = 'let c of current_categories|paginate: config; let i = index'>
+                <td>{{c.category_id}}</td>
                 <td>{{c.category_name}}</td>
-                <td>
-                    <a [routerLink]="['../../products/show/'+c.category_id]" class="btn btn-success"><i class="far fa-edit"></i> Xem</a>
-                    <a [routerLink]="['edit/'+c.category_id]" class="btn btn-warning"><i class="far fa-edit"></i> Sửa</a>
-                    <a [routerLink]="['#']"  class="btn btn-danger" (click)="removeCategory(c)"><i class="far fa-trash-alt"></i> Xóa</a>
+                <td><img width="50px" src={{baseUrl}}{{c.category_image}} alt=""></td>
+                <td class="action_options">
+                  <div>
+                    <a [routerLink]="['../../products/'+c.category_id]" class="btn btn-success"><i class="fas fa-eye"></i></a>
+                    <a [routerLink]="['../edit/'+c.category_id]" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                    <a class="btn btn-danger" (click)="removeCategory(c)"><i class="far fa-trash-alt"></i></a>
+                  </div>
                 </td>
-                </tr>
-                      </tbody>
-                  </table>
-          </div>
-          <div class="clearfix"></div>
+              </tr>
+              <tr *ngIf="current_categories.length==0" class="table_nothing">
+                <td colspan="4">Không có thể loại nào cả.</td>
+              </tr>
+            </tbody>
+          </table>
+          <pagination-controls *ngIf="current_categories.length!=0" [nextLabel]="'Sau'" [previousLabel]="'Trước'" (pageChange)="pageChanged($event)"></pagination-controls>
         </div>
       </div>
     </div>
   </div>
+</div>
   

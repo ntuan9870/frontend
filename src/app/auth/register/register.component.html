@@ -1,0 +1,119 @@
+<div class="bodythu2">
+<div class="container">
+    <div class="d-flex justify-content-center h-100">
+    <div class="card">
+        <div class="card-header">
+        <h3>Đăng ký</h3>
+        <div class="d-flex justify-content-end social_icon">
+            <span><i class="fab fa-facebook-square"></i></span>
+            <span><i class="fab fa-google-plus-square"></i></span>
+            <span><i class="fab fa-twitter-square"></i></span>
+        </div>
+        </div>
+        <div class="card-body">
+        <form #registerForm="ngForm">
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                    <input type="text" name="username" class="form-control" placeholder="Tên hiển thị.." autocomplete="off" required minlength="4" [(ngModel)]="user.user_name" #checkusername="ngModel" (keyup)="c.removeNameInputMessage()">
+                </div>
+                <div class="checkerror" *ngIf="checkusername.invalid&&(checkusername.dirty||checkusername.touched)">
+                    <div *ngIf="checkusername.errors['required']">
+                        <span>Tên đăng nhập là trường bắt buộc!</span>
+                    </div>
+                    <div *ngIf="checkusername.errors['minlength']">
+                        <span>Tên đăng nhập phải có ít nhất 4 ký tự!</span>
+                    </div>
+                </div>
+                <div class="checkerror" *ngIf = "c.validate_error['name_unique']">
+                    <span>Tên đăng nhập đã có người khác dùng!</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                </div>
+                <input type="password" class="form-control" placeholder="Mật khẩu.." name="password" autocomplete="off" required minlength="8" [(ngModel)]="user.user_password" #checkpassword="ngModel">
+            </div>
+            <div class="checkerror" *ngIf="checkpassword.invalid&&(checkpassword.dirty||checkpassword.touched)">
+                <div *ngIf="checkpassword.errors['required']">
+                <span>Mật khẩu là trường bắt buộc!</span>
+                </div>
+                <div *ngIf="checkpassword.errors['minlength']">
+                <span>Mật khẩu phải có ít nhất 8 ký tự!</span>
+                </div>
+            </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="Nhập lại mật khẩu.." autocomplete="off" name="repassword" required [(ngModel)]="repassword" #checkrepassword="ngModel">
+                </div>
+                <div class="checkerror" *ngIf="checkrepassword.invalid&&(checkrepassword.dirty||checkrepassword.touched)">
+                    <div *ngIf="checkrepassword.errors['required']">
+                        <span>Nhập lại mật khẩu là trường bắt buộc!</span>
+                    </div>
+                </div>
+                <div *ngIf="checkRePassword()" class="checkerror">
+                    <span>Mật khẩu nhập lại không đúng!</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    </div>
+                    <input type="email" name="email" class="form-control" placeholder="Email.." autocomplete="off" required email [(ngModel)]="user.user_email" #checkemail="ngModel" (keyup)="c.removeEmailInputMessage()">
+                </div>
+                <div class="checkerror" *ngIf="checkemail.invalid&&(checkemail.dirty||checkemail.touched)">
+                    <div *ngIf="checkemail.errors['required']">
+                    <span>Email là trường bắt buộc!</span>
+                    </div>
+                    <div *ngIf="checkemail.errors['email']">
+                    <span>Vui lòng nhập emai đúng định dạng!</span>
+                    </div>
+                </div>
+                <div class="checkerror" *ngIf = "c.validate_error['email_unique']">
+                    <span>Email đã có người khác dùng!</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                    </div>
+                    <input type="text" name="phone" class="form-control" placeholder="Số điện thoại.." autocomplete="off" [(ngModel)]="user.user_phone" #checkphone="ngModel" minlength="8" maxlength="12">
+                </div>
+                <div class="checkerror" *ngIf="checkphone.invalid&&(checkphone.dirty||checkphone.touched)">
+                    <div *ngIf="checkphone.errors['minlength']||checkphone.errors['maxlength']">
+                        <span>Số điện thoại phải dài từ 8 đến 12 số!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" ></ngx-recaptcha2> -->
+            <ngx-recaptcha2 [siteKey]="'6LfA2NkZAAAAAEL3YAclo_5tv58ouFCkrsitmE9z'" (success)="authService.handleSuccess()"></ngx-recaptcha2>
+
+            <div class="form-group">
+            <input type="submit" [disabled]="!registerForm.valid||!authService.captcha" (click)="register()" value="Đăng ký" class="btn float-right register_btn">
+            </div>
+        </form>
+        </div>
+        <div class="card-footer">
+        <div class="d-flex justify-content-center links">
+            Bạn đã có tài khoản?<a [routerLink]="['/auth/login']">Đăng nhập</a>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>

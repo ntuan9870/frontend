@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import {DatePipe} from '@angular/common'
+import localeVi from '@angular/common/locales/vi'
+import {registerLocaleData} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+registerLocaleData(localeVi,'vi-VN')

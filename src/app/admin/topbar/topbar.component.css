@@ -2,8 +2,7 @@ nav{
     width: 100%;
     background-color: orange;
     height:50px;
-    position: fixed;
-    z-index: 1000;
+    z-index: 1;
 }
 #title{
   font-size: 20px;
@@ -45,53 +44,12 @@ nav{
 .show{
   display: block!important;
 }
-#menu_topbar{
-  position: absolute;
-  min-height: 100vh;
-  width: 100vw;
-  background-color: black;
-  z-index: 900;
-  top:50px;
-}
 #profile_admin{
   position: relative;
 }
 #profile_admin button{
   position: absolute;
   right: 0;
-}
-#profile_admin>a{
-  position: absolute;
-  right: 0;
-  line-height: 30px;
-  font-size: 29px;
-  background-color: rgba(27, 27, 27, 0.514);
-  color: white;
-  border: 1px solid rgba(0, 0, 0, 0.377);
-  padding: 3px;
-  border-radius: 3px;
-  width: 40px;
-  text-align: center;
-  display: none;
-}
-#profile_admin>a:hover{
-  cursor: pointer;
-  background-color: rgba(161, 161, 161, 0.514);
-}
-#menu_topbar_list{
-  color: white;
-  color: 12px;
-  list-style: none;
-  margin: 0px;
-  padding: 0px 10px;
-  font-size: 14px;
-}
-#menu_topbar_list li{
-  line-height: 45px;
-  cursor: pointer;
-}
-#menu_topbar_list li:hover{
-  color: blueviolet;
 }
 @media (max-width: 768px) {
   #profile_admin>a{
@@ -107,8 +65,5 @@ nav{
   }
   #profile_admin button{
     display: block;
-  }
-  #menu_topbar{
-    display: none;
   }
 }

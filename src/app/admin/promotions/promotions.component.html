@@ -1,0 +1,53 @@
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <h3>Danh sách KM</h3>
+                <a [routerLink]="['add']" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
+            </div>
+            <div class="panel-body" style="overflow-x: scroll;">
+                <!-- current -->
+                <div class="bootstrap-table">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr class="bg-primary">
+                                <th>STT</th>
+                                <th>Mã</th>
+                                <th>Tên chương trình</th>
+                                <th>Từ ngày</th>
+                                <th>Đến ngày</th>
+                                <th>Giá trị</th>
+                                <th>Trạng thái</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="promotions.length==0" class="table_nothing">
+                                <td colspan="9">Chưa có chương trình khuyến mãi!</td>
+                            </tr>
+                            <tr *ngFor="let p of promotions|paginate: config; let i = index">
+                                <td>{{1+i+(this.config.currentPage-1)*this.config.itemsPerPage}}</td>
+                                <td>{{p.promotion_id}}</td>
+                                <td>{{p.promotion_name}}</td>
+                                <td>{{p.promotion_start_date}}</td>
+                                <td>{{p.promotion_end_date}}</td>
+                                <td>{{p.promotion_infor}} %</td>
+                                <td style="font-weight: bold;">
+                                    <span *ngIf="p?.promotion_apply=='true'" style="color:rgb(0, 255, 0);">Đã kích hoạt</span>
+                                    <span *ngIf="p?.promotion_apply=='false'" style="color:red;">Chưa kích hoạt</span>
+                                </td>
+                                <td class="action_options">
+                                    <div>
+                                        <a [routerLink]="['edit/'+p.promotion_id]" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                                        <a class="btn btn-danger" (click)="removePromotion(p)"><i class="far fa-trash-alt"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <pagination-controls *ngIf="promotions.length!=0" [nextLabel]="'Sau'" [previousLabel]="'Trước'" (pageChange)="pageChanged($event)"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
