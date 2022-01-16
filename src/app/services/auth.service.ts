@@ -63,10 +63,12 @@ export class AuthService {
       },error=>{
         this.loginFail()
         this.c.stopLoading()
+        console.log(error)
       }
     );
   }
   loginFail(){
+    console.log("ABC")
     if(this.times>=3) this.router.navigate(['./auth/forgot_password']);
     this.times++
     this.c.showAlert("Tài khoản bạn vừa nhập không chính xác - Lưu ý: nếu bạn nhập sai quá 3 lần sẽ chuyển sang trang quên mật khẩu)!");

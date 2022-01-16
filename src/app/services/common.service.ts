@@ -11,7 +11,7 @@ declare function showNotifiDialog(message:any):any;
 })
 export class CommonService {
   // public baseUrl = "http://localhost:8000/";
-  public baseUrl = "http://mobileshoptt.tk/public/"; 
+  public baseUrl = "http://mobileshoptt.tk/public/";
   public validate_error = {'name_required':false, 'name_unique':false, 'image_mimes':false, 'image_required':false, 'email_not_found':false}; 
   public input_style = {'input_name': null, 'input_email': null}
   constructor() { }
