@@ -28,7 +28,8 @@ function confirmMessage(message, callback){
 }
 function showLoading(){
    var loadingDiv = document.createElement("div");
-   loadingDiv.innerHTML = `<img src="../assets/admin/img/loading.gif" width="300px"/>`;
+   // loadingDiv.innerHTML = `<img src="../assets/admin/img/loading.gif" width="300px"/>`;
+   loadingDiv.innerHTML = `<img src="https://i.gifer.com/Ocko.gif" width="300px"/>`;
    loadingDiv.id = "loadingDiv";
    loadingDiv.style.cssText = "width:100vw; height: 100vh; background-color: black; opacity: 0.7; position: fixed; top:0px; left: 0px; z-index: 2; display: flex;align-items: center; justify-content: center;";
    document.body.appendChild(loadingDiv);
