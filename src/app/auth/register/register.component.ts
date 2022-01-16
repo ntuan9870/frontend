@@ -7,7 +7,7 @@ import { CommonService } from 'src/app/services/common.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['../auth.component.css']
 })
 export class RegisterComponent implements OnInit {
 
@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit {
   constructor(public c:CommonService, public authService:AuthService, private activeRoute:ActivatedRoute, private el:ElementRef, private router:Router) { }
 
   ngOnInit(): void {
+    this.c = new CommonService
     this.c.input_style.input_name = this.el.nativeElement.querySelector("input[name='username']");
     this.c.input_style.input_email = this.el.nativeElement.querySelector("input[name='email']");
   }
@@ -35,10 +36,8 @@ export class RegisterComponent implements OnInit {
       }
     );
   }
-  checkRePassword(){
-    if (this.repassword === this.user.user_password || this.repassword==''){
-      return false;
-    }
-    return true;
+  
+  public handleSuccess(){
+    this.captcha = true;
   }
 }

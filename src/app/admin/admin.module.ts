@@ -16,6 +16,9 @@ import { EditPromotionComponent } from './promotions/edit-promotion/edit-promoti
 import { AddPromotionComponent } from './promotions/add-promotion/add-promotion.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { UsersComponent } from './users/users.component';
+import { AddUserComponent } from './users/add-user/add-user.component';
+import { EditUserComponent } from './users/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     EditComponent,
     PromotionsComponent,
     EditPromotionComponent,
-    AddPromotionComponent
+    AddPromotionComponent,
+    UsersComponent,
+    AddUserComponent,
+    EditUserComponent
   ],
   imports: [
     CommonModule,

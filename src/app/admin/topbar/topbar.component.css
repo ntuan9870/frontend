@@ -11,6 +11,7 @@ nav{
   color: white;
   line-height: 50px;
   margin-left: 10px;
+  text-decoration: none;
 }
 #nav_admin{
   display: flex;

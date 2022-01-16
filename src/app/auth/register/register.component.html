@@ -62,7 +62,7 @@
                         <span>Nhập lại mật khẩu là trường bắt buộc!</span>
                     </div>
                 </div>
-                <div *ngIf="checkRePassword()" class="checkerror">
+                <div *ngIf="authService.checkRePassword(repassword, user.user_password)" class="checkerror">
                     <span>Mật khẩu nhập lại không đúng!</span>
                 </div>
             </div>
@@ -99,18 +99,16 @@
                     </div>
                 </div>
             </div>
-
-            <!-- <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" ></ngx-recaptcha2> -->
-            <ngx-recaptcha2 [siteKey]="'6LdMywEeAAAAAKwC2KvVcwxpuQelmiRhQ-M4rru_'" (success)="authService.handleSuccess()"></ngx-recaptcha2>
+            <ngx-recaptcha2 [siteKey]="authService.siteKey" (success)="captcha = true"></ngx-recaptcha2>
 
             <div class="form-group">
-            <input type="submit" [disabled]="!registerForm.valid||!authService.captcha" (click)="register()" value="Đăng ký" class="btn float-right register_btn">
+            <input type="submit" [disabled]="!registerForm.valid||!captcha||authService.checkRePassword(repassword, user.user_password)" (click)="register()" value="Đăng ký" class="btn float-right login_btn">
             </div>
         </form>
         </div>
         <div class="card-footer">
         <div class="d-flex justify-content-center links">
-            Bạn đã có tài khoản?<a [routerLink]="['/auth/login']">Đăng nhập</a>
+            Bạn đã có tài khoản?<a [routerLink]="['..']">Đăng nhập</a>
         </div>
         </div>
     </div>

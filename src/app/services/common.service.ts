@@ -4,14 +4,15 @@ declare function showAlert(message:any):any;
 declare function confirmMessage(message, callback):any;
 declare function showLoading():any;
 declare function stopLoading():any;
+declare function showNotifiDialog(message:any):any;
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonService {
-  public baseUrl = "http://localhost:8000/";
-  // public baseUrl = "http://mobileshoptt.tk/public/"; 
-  public validate_error = {'name_required':false, 'name_unique':false, 'image_mimes':false, 'image_required':false}; 
+  // public baseUrl = "http://localhost:8000/";
+  public baseUrl = "http://mobileshoptt.tk/public/"; 
+  public validate_error = {'name_required':false, 'name_unique':false, 'image_mimes':false, 'image_required':false, 'email_not_found':false}; 
   public input_style = {'input_name': null, 'input_email': null}
   constructor() { }
   public check_error_submit(error:any){
@@ -20,7 +21,7 @@ export class CommonService {
         showAlert("Kiểm tra dữ liệu nhập vào!");
         break;
       case 404:
-        showAlert("Không tìm thấy thể loại, vui lòng quay ra!");
+        showAlert("Không tìm thấy, vui lòng quay ra!");
         break;
       default:
         showAlert("Lỗi hệ thống!");
@@ -45,6 +46,10 @@ export class CommonService {
           this.validate_error['email_unique'] = true;
           if (this.input_style.input_email) this.input_style.input_email.classList.add("is-invalid");
           break
+        case 'email_not_found':
+          this.validate_error['email_not_found'] = true;
+          if (this.input_style.input_email) this.input_style.input_email.classList.add("is-invalid");
+          break
       }
     });
   }
@@ -56,6 +61,9 @@ export class CommonService {
   }
   public confirmMessage(message, callback){
     confirmMessage(message,callback);
+  }
+  public showNotifiDialog(message:any){
+    showNotifiDialog(message);
   }
   public showLoading(){
     showLoading();
@@ -82,6 +90,7 @@ export class CommonService {
   public removeEmailInputMessage(){
     this.validate_error['email_required'] = false;
     this.validate_error['email_unique'] = false;
+    this.validate_error['email_not_found'] = false;
     if (this.input_style.input_email) this.input_style.input_email.classList.remove("is-invalid");
   }
   public hasError(){
@@ -92,5 +101,16 @@ export class CommonService {
       }
     }
     return false;
+  }
+  public getLoggedUser(){
+    return JSON.parse(localStorage.getItem('user'))||JSON.parse(sessionStorage.getItem('user'))
+  }
+  public logout(){
+    if(localStorage.getItem('user')){
+      localStorage.removeItem('user');
+    }
+    if(sessionStorage.getItem('user')){
+      sessionStorage.removeItem('user');
+    }
   }
 }

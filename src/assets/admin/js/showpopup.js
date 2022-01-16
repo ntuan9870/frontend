@@ -1,6 +1,9 @@
 function showSwal(message) {
    Swal.fire({title:message,text: 'Cửa sổ sẽ tự đóng trong vòng 2 giây',timer:2000})
 }
+function showNotifiDialog(message){
+   Swal.fire(message)
+}
 function showAlert(message){
    Swal.fire({
       icon: 'error',
